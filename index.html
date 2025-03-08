@@ -3,133 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarFinder - Used Car Browser</title>
+    <title>UsedCarAroundMe - Find Your Perfect Used Car</title>
+    <meta name="description" content="Browse and find used cars with detailed specifications using NHTSA data">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">CarFinder</a>
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="UsedCarAroundMe Logo" width="30" height="30" class="d-inline-block align-top">
+                UsedCarAroundMe
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4>Find Your Car</h4>
-                    </div>
-                    <div class="card-body">
-                        <form id="car-search-form">
-                            <div class="mb-3">
-                                <label for="make-select" class="form-label">Make</label>
-                                <select class="form-select" id="make-select" required>
-                                    <option value="">Select Make</option>
-                                    <!-- Options will be populated via JavaScript -->
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="model-select" class="form-label">Model</label>
-                                <select class="form-select" id="model-select" required disabled>
-                                    <option value="">Select Model</option>
-                                    <!-- Options will be populated via JavaScript -->
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="year-select" class="form-label">Year</label>
-                                <select class="form-select" id="year-select" required disabled>
-                                    <option value="">Select Year</option>
-                                    <!-- Options will be populated via JavaScript -->
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Search</button>
-                        </form>
+    <!-- Hero Section -->
+    <header class="bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="display-4 fw-bold">Find Your Perfect Used Car</h1>
+                    <p class="lead">Browse through makes and models with detailed specifications from the NHTSA database</p>
+                </div>
+                <div class="col-lg-5">
+                    <img src="images/car-placeholder.jpg" class="img-fluid rounded" alt="Used Car">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Car Selection Form -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h2 class="h4 mb-0">Search For A Vehicle</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="carSearchForm">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="makeSelect" class="form-label">Make</label>
+                                        <select class="form-select" id="makeSelect" required>
+                                            <option value="">Select Make</option>
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                        <div class="spinner-border spinner-border-sm text-primary d-none" id="makeSpinner" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="modelSelect" class="form-label">Model</label>
+                                        <select class="form-select" id="modelSelect" required disabled>
+                                            <option value="">Select Model</option>
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                        <div class="spinner-border spinner-border-sm text-primary d-none" id="modelSpinner" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="yearSelect" class="form-label">Year</label>
+                                        <select class="form-select" id="yearSelect" required disabled>
+                                            <option value="">Select Year</option>
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                        <div class="spinner-border spinner-border-sm text-primary d-none" id="yearSpinner" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary" id="searchButton">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header bg-secondary text-white">
-                        <h4>About</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Vehicle Information</h2>
+            
+            <!-- Alert area for messages -->
+            <div id="alertArea"></div>
+            
+            <!-- Loading state -->
+            <div id="loadingResults" class="d-none text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Fetching vehicle information...</p>
+            </div>
+            
+            <!-- Results content -->
+            <div id="resultsContent" class="d-none">
+                <div class="row">
+                    <!-- Vehicle Overview -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h3 class="h5 mb-0">Vehicle Overview</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-4">
+                                    <img id="vehicleImage" src="images/car-placeholder.jpg" alt="Vehicle" class="img-fluid rounded mb-3" style="max-height: 200px;">
+                                    <h4 id="vehicleTitle" class="mb-0">Vehicle Name</h4>
+                                </div>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Make</th>
+                                            <td id="vehicleMake">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Model</th>
+                                            <td id="vehicleModel">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Year</th>
+                                            <td id="vehicleYear">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Vehicle Type</th>
+                                            <td id="vehicleType">-</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Estimated Price</th>
+                                            <td id="vehiclePrice">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p>CarFinder is a demonstration project using the NHTSA vehicle API to browse car information.</p>
-                        <p>Price estimates are simulations and not actual market values.</p>
+                    
+                    <!-- Vehicle Specifications -->
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h3 class="h5 mb-0">Specifications</h3>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody id="vehicleSpecs">
+                                        <!-- Specifications will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-8">
-                <div id="loading" class="text-center py-5 d-none">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2">Loading vehicle data...</p>
+            <!-- No results state -->
+            <div id="noResults" class="d-none text-center py-5">
+                <div class="alert alert-info">
+                    <h4 class="alert-heading">No Vehicle Data Found</h4>
+                    <p>We couldn't find detailed information for this vehicle. Please try another selection.</p>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div id="results-container" class="d-none">
-                    <h2 id="vehicle-title" class="mb-4">Vehicle Results</h2>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <h4>Vehicle Details</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="vehicle-details">
-                                        <!-- Vehicle details will be populated here -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card mb-4">
-                                <div class="card-header bg-success text-white">
-                                    <h4>Price Estimate</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div id="price-estimate">
-                                        <!-- Price information will be populated here -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card mb-4">
-                        <div class="card-header bg-info text-white">
-                            <h4>Technical Specifications</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="technical-specs">
-                                <!-- Technical specifications will be populated here -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <p class="mb-0"><strong>Note:</strong> This is a demo project. For actual market prices and availability, visit a proper car marketplace.</p>
-                    </div>
+    <!-- About Section -->
+    <section class="py-5" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="text-center mb-4">About UsedCarAroundMe</h2>
+                    <p>UsedCarAroundMe is a demonstration website that uses the NHTSA vehicle database to provide specifications and information about various vehicles. This site is for educational purposes and uses the public NHTSA API to retrieve vehicle data.</p>
+                    <p>The price estimates shown on this site are simulated and do not reflect actual market values. They are calculated based on the vehicle's year and other basic factors for demonstration purposes only.</p>
+                    <p>For actual pricing and to purchase used vehicles, please consult established automotive marketplaces or dealerships.</p>
                 </div>
-                
-                <div id="no-results" class="alert alert-warning d-none">
-                    <h4>No Results Found</h4>
-                    <p>Please try a different selection.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 UsedCarAroundMe. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">Data provided by <a href="https://vpic.nhtsa.dot.gov/api/" class="text-white" target="_blank">NHTSA</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- API Error Modal -->
+    <div class="modal fade" id="apiErrorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">API Connection Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>We're having trouble connecting to the NHTSA database. We're using fallback data instead.</p>
+                    <p>This could be due to:</p>
+                    <ul>
+                        <li>CORS restrictions</li>
+                        <li>API service unavailable</li>
+                        <li>Network connectivity issues</li>
+                    </ul>
+                    <p>The data shown may be limited or outdated.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="retryButton">Retry Connection</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="bg-dark text-white mt-5 py-3">
-        <div class="container text-center">
-            <p class="mb-0">CarFinder © 2025 - A GitHub Pages Demo Project</p>
-        </div>
-    </footer>
-
+    <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Application JS -->
+    <script src="js/fallback-data.js"></script>
     <script src="js/api.js"></script>
-    <script src="js/pricing.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
