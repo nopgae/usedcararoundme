@@ -217,6 +217,18 @@
             </div>
         </div>
     </footer>
+    
+    <!-- For immediate test/demo - add a small script to show a result on page load -->
+    <script>
+        // Show initial results on page load for demo purposes
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait a moment to ensure all components are loaded
+            setTimeout(function() {
+                // Show the results section that's initially hidden
+                document.getElementById('resultsContent').classList.remove('d-none');
+            }, 1000);
+        });
+    </script>
 
     <!-- API Error Modal -->
     <div class="modal fade" id="apiErrorModal" tabindex="-1" aria-hidden="true">
