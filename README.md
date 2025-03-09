@@ -1,4 +1,4 @@
-# UsedCarAroundMe
+# usedcararoundme
 
 UsedCarAroundMe is a static website that simulates a used car browsing platform similar to AutoTrader.com. It uses the NHTSA vehicle database API to retrieve vehicle specifications and metadata.
 
@@ -12,7 +12,7 @@ UsedCarAroundMe is a static website that simulates a used car browsing platform 
 
 ## Live Demo
 
-Visit [https://yourusername.github.io/usedcararoundme](https://yourusername.github.io/usedcararoundme) to see the live demo.
+Visit [https://nopgae.github.io/usedcararoundme](https://nopgae.github.io/usedcararoundme) to see the live demo.
 
 ## Project Structure
 
@@ -59,7 +59,7 @@ usedcararoundme/
 4. Run the following command to clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/usedcararoundme.git
+git clone https://github.com/nopgae/usedcararoundme.git
 cd usedcararoundme
 ```
 
