@@ -113,7 +113,7 @@ git push origin main
 3. Scroll down to the "GitHub Pages" section.
 4. Under "Source", select "main" branch and "/" (root) folder.
 5. Click "Save".
-6. GitHub will provide you with a URL where your site is published (usually https://yourusername.github.io/usedcararoundme/).
+6. GitHub will provide you with a URL where your site is published ( https://nopgae.github.io/usedcararoundme/).
 
 ## Limitations and Future Enhancements
 
